@@ -1,0 +1,71 @@
+# Default configuration for P2P Lending Risk Assessment
+
+# Data configuration
+data:
+  n_samples: 10000
+  random_state: 42
+  train_ratio: 0.6
+  val_ratio: 0.2
+  test_ratio: 0.2
+
+# Feature engineering
+features:
+  include_interactions: true
+  include_polynomials: true
+  include_binning: true
+  include_time: true
+  polynomial_degree: 2
+  scaler_type: 'standard'  # standard, robust, power
+
+# Model configuration
+models:
+  logistic_regression:
+    C: 1.0
+    penalty: 'l2'
+    solver: 'liblinear'
+    max_iter: 1000
+  
+  random_forest:
+    n_estimators: 100
+    max_depth: null
+    min_samples_split: 2
+    min_samples_leaf: 1
+    max_features: 'sqrt'
+  
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.0
+    reg_lambda: 1.0
+  
+  lightgbm:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.0
+    reg_lambda: 1.0
+
+# Evaluation configuration
+evaluation:
+  thresholds: [0.1, 0.2, 0.3, 0.4, 0.5]
+  cv_folds: 5
+  test_size: 0.2
+
+# Explainability configuration
+explainability:
+  max_samples_shap: 1000
+  top_n_features: 15
+  bootstrap_samples: 100
+
+# Output configuration
+output:
+  save_models: true
+  save_predictions: true
+  save_plots: true
+  assets_dir: 'assets'
+  models_dir: 'models'
